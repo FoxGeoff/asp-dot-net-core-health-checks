@@ -60,6 +60,8 @@ namespace InvestmentManager
                 loggingBuilder.AddDebug();
                 loggingBuilder.AddNLog();
             });
+
+            services.AddHealthChecks();
         }
 
 
@@ -76,6 +78,13 @@ namespace InvestmentManager
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseRouting();
+
+            app.UseEndpoints( endpoints =>
+            {
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
